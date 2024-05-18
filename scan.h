@@ -3,7 +3,7 @@
 #include <tuple>
 #include <print>
 
-namespace Scan
+namespace scan
 {
 template <const std::size_t N>
 class FormatString
@@ -63,7 +63,7 @@ template <FormatString>
 class FormatStringTag {};
 
 template <FormatString S>
-FormatStringTag<S> constexpr operator""_c() { return {}; }
+FormatStringTag<S> constexpr operator""_f() { return {}; }
 
 
 #define DEFINE_SWITCH_TYPE_ON_SPECIFIER(Specifier, Type)						\
@@ -188,4 +188,15 @@ constexpr TupleMaker<Format, Format.size() - 2, false>::type scan(FormatStringTa
 	RecursiveFunction<Format, decltype(tuple), tuple_last_index, Format.size()>::scan(tuple, data);
 	return tuple;
 }
+
+template<FormatString Format>
+constexpr TupleMaker<Format, Format.size() - 2, false>::type scan(std::string_view data)
+{
+	auto tuple = generate_tuple<Format>();
+	constexpr std::size_t tuple_last_index = std::tuple_size<decltype(tuple)>::value - 1;
+	RecursiveFunction<Format, decltype(tuple), tuple_last_index, Format.size()>::scan(tuple, data);
+	return tuple;
 }
+}
+
+using scan::operator""_f;
