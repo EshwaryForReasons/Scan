@@ -1,6 +1,6 @@
 # Usage #
 
-Include `scan.h`. Thats it.
+THIS IS OUTDATED. REMEMBER TO UPDATE THIS.
 
 ### Specifiers ###
 
